@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114452077450926924}
   - component: {fileID: 212946471673095690}
   - component: {fileID: 114109168760696712}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Perso
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 33049979411788934}
   - component: {fileID: 23313430251207344}
   - component: {fileID: 65128633584945138}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1760691613602464}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.277, y: -2.804, z: -1.4095573}
+  m_LocalPosition: {x: 7.277, y: -2.804, z: -1.409557}
   m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children:
   - {fileID: 4676624118947124}

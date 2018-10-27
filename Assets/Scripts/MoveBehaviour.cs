@@ -11,10 +11,11 @@ public class MoveBehaviour : MonoBehaviour {
     public float jumpHeight;
     public GameObject shot;
     public GameObject shield;
-    private bool canJump = true;
-    private bool hasTentacle = true;
-    private bool hasShield = true;
+    private bool canJump = false;
+    private bool hasTentacle = false;
+    private bool hasShield = false;
     private bool shieldSpawned = false;
+    private bool paused = false;
     
     public enum EquipHand
     {
@@ -31,72 +32,82 @@ public class MoveBehaviour : MonoBehaviour {
     // Use this for initialization
     void Start () {
         rb = gameObject.GetComponent<Rigidbody2D>();
+        paused = false;
 	}
 
     // Update is called once per frame
     void Update () {
-        float translateX = Input.GetAxis("Horizontal") * vitesse;
+        Debug.Log(paused);
+        if (!paused)
+        {
+            float translateX = Input.GetAxis("Horizontal") * vitesse;
 
-        if (translateX > 0)
-        {
-            direction = 1;
-            if (!facingRight) Flip();
-        }
-        else if(translateX < 0)
-        {
-            direction = -1;
-            if (facingRight) Flip();
-        }
-
-        if(Input.GetMouseButtonDown(0) && leftHand != EquipHand.NONE)
-        {
-            switch(leftHand)
+            if (translateX > 0)
             {
-                case EquipHand.GUN:
-                    handleGun();
-                    break;
-                case EquipHand.DASH:
-                    handleDash();
-                    break;
-                case EquipHand.TENTACLE:
-                    handleTentacle();
-                    break;
-                case EquipHand.SHIELD:
-                    handleShield();
-                    break;
+                direction = 1;
+                if (!facingRight) Flip();
             }
-        }
-
-        if(Input.GetMouseButtonDown(1) && rightHand != EquipHand.NONE)
-        {
-            switch (rightHand)
+            else if (translateX < 0)
             {
-                case EquipHand.GUN:
-                    handleGun();
-                    break;
-                case EquipHand.DASH:
-                    handleDash();
-                    break;
-                case EquipHand.TENTACLE:
-                    handleTentacle();
-                    break;
-                case EquipHand.SHIELD:
-                    handleShield();
-                    break;
+                direction = -1;
+                if (facingRight) Flip();
             }
-        }
 
-        if(translateX == 0f)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
-        }
-        else
-        {
-            rb.velocity = new Vector2(translateX, rb.velocity.y);
-        }
-            
+            if (Input.GetMouseButtonDown(0) && leftHand != EquipHand.NONE)
+            {
+                switch (leftHand)
+                {
+                    case EquipHand.GUN:
+                        handleGun();
+                        break;
+                    case EquipHand.DASH:
+                        handleDash();
+                        break;
+                    case EquipHand.TENTACLE:
+                        handleTentacle();
+                        break;
+                    case EquipHand.SHIELD:
+                        handleShield();
+                        break;
+                }
+            }
 
-        rb.freezeRotation = true;
+            if (Input.GetMouseButtonDown(1) && rightHand != EquipHand.NONE)
+            {
+                switch (rightHand)
+                {
+                    case EquipHand.GUN:
+                        handleGun();
+                        break;
+                    case EquipHand.DASH:
+                        handleDash();
+                        break;
+                    case EquipHand.TENTACLE:
+                        handleTentacle();
+                        break;
+                    case EquipHand.SHIELD:
+                        handleShield();
+                        break;
+                }
+            }
+
+            if (translateX == 0f)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
+            }
+            else
+            {
+                rb.velocity = new Vector2(translateX, rb.velocity.y);
+            }
+
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                die();
+            }
+
+            rb.freezeRotation = true;
+
+        }
     }
 
     void Flip()
@@ -121,6 +132,16 @@ public class MoveBehaviour : MonoBehaviour {
     public void die()
     {
         Debug.Log("I'm Dead. Let's Respawn and Mutate");
+        
+        GameObject.Find("LevelManager").GetComponent<LevelSPawner>().mutate();
+
+        paused = true;
+    }
+
+    public void resume()
+    {
+        Debug.Log("resume");
+        paused = false;
     }
 
     public void handleGun()
@@ -130,7 +151,7 @@ public class MoveBehaviour : MonoBehaviour {
         mouse = (Vector2)Camera.main.ScreenToWorldPoint(mouse);
         GameObject shoot = (GameObject)GameObject.Instantiate(shot, gun.transform.position, Quaternion.identity);
         //Si jamais on veut tirer en direction de la souris plutot que tout droit
-        shoot.GetComponent<Rigidbody2D>().AddForce(((Vector2)transform.position - mouse).normalized * 1000);
+        shoot.GetComponent<Rigidbody2D>().AddForce((mouse - (Vector2)transform.position).normalized * 1000);
         //shoot.GetComponent<Rigidbody2D>().AddForce(new Vector2(1000 * direction, 0));
     }
 

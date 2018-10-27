@@ -64,6 +64,7 @@ public class AlienBehavior : MonoBehaviour {
         //Leave Essence
         GameObject ess = (GameObject) GameObject.Instantiate (essence, transform.position, Quaternion.identity);
         ess.GetComponent<EssenceBehavior> ().mode = mode;
+        ess.transform.parent = GameObject.Find("Level").transform;
         //getDestroyed
         Destroy (gameObject);
     }
