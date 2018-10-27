@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EssenceBehavior : MonoBehaviour {
 
+    public int mode;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -14,7 +16,7 @@ public class EssenceBehavior : MonoBehaviour {
         if(collision.gameObject.tag == "Player")
         {
             //unlock power
-            collision.gameObject.GetComponent<MoveBehaviour>().getEssence(0);
+            collision.gameObject.GetComponent<MoveBehaviour>().getEssence(mode);
 
             Destroy(gameObject);
         }

@@ -10,12 +10,15 @@ public class AlienBehavior : MonoBehaviour {
     private Rigidbody2D rb;
     private int vitesse = 5;
     public GameObject essence;
+    public GameObject tentacle;
+    public int mode;
 	// Use this for initialization
 	void Start () {
         player = GameObject.Find("Perso").GetComponent<BoxCollider2D>();
         murD = GameObject.Find("Droite").GetComponent<BoxCollider2D>();
         murG = GameObject.Find("Gauche").GetComponent<BoxCollider2D>();
         rb = gameObject.GetComponent<Rigidbody2D>();
+        tentacle.SetActive(false);
 	}
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -48,8 +51,8 @@ public class AlienBehavior : MonoBehaviour {
                 rb.velocity = new Vector2(-1 * vitesse, rb.velocity.y);
             else
             {
-                onLeft = false;
                 rb.velocity = new Vector2(1 * vitesse, rb.velocity.y);
+                Flip();
             }
         }
         else
@@ -58,26 +61,38 @@ public class AlienBehavior : MonoBehaviour {
                 rb.velocity = new Vector2(1 * vitesse, rb.velocity.y);
             else
             {
-                onLeft = true;
                 rb.velocity = new Vector2(-1 *vitesse, rb.velocity.y);
+                Flip();
             }
         }
 
         if(d3 < 3)
         {
-            Debug.Log("trigger");
-            if(grounded)
+            if(grounded && mode == 1)
                 rb.AddForce(new Vector2(0, 250));
+            if(mode == 2)
+            {
+                //Strike
+                tentacle.SetActive(true);
+            }
         }
 
         rb.freezeRotation = true;
 	}
 
+    void Flip()
+    {
+        onLeft = !onLeft;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
+    }
+
     public void Die()
     {
         //Leave Essence
-        GameObject.Instantiate(essence, transform.position, Quaternion.identity);
-
+        GameObject ess = (GameObject)GameObject.Instantiate(essence, transform.position, Quaternion.identity);
+        ess.GetComponent<EssenceBehavior>().mode = mode;
         //getDestroyed
         Destroy(gameObject);
     }
