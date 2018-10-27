@@ -6,9 +6,12 @@ public class MoveBehaviour : MonoBehaviour {
 
     private Rigidbody2D rb;
     private bool grounded = false;
+    private bool facingRight = true;
+    private int direction;
     public float vitesse;
     public float jumpHeight;
     public Transform groundPos;
+    public GameObject shot;
 
 	// Use this for initialization
 	void Start () {
@@ -39,11 +42,39 @@ public class MoveBehaviour : MonoBehaviour {
     void Update () {
         float translateX = Input.GetAxis("Horizontal") * vitesse;
 
+        if (translateX > 0)
+        {
+            direction = 1;
+            if (!facingRight) Flip();
+        }
+        else if(translateX < 0)
+        {
+            direction = -1;
+            if (facingRight) Flip();
+        }
+
         if(Input.GetKeyDown("space") && grounded)
         {
             rb.AddForce(new Vector2(0f, jumpHeight));
         }
 
+        if(Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            GameObject gun = GameObject.Find("Gun");
+            GameObject shoot = (GameObject)GameObject.Instantiate(shot, gun.transform.position, Quaternion.identity);
+            shoot.GetComponent<Rigidbody2D>().AddForce(new Vector2(1000*direction, 0));
+        }
+
         rb.velocity = new Vector2(translateX, rb.velocity.y);
+
+        rb.freezeRotation = true;
+    }
+
+    void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
     }
 }
