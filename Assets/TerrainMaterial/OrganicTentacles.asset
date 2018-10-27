@@ -64,7 +64,7 @@ MonoBehaviour:
     - serializedVersion: 2
       x: 0.8853637
       y: 0
-      width: 0.10086301
+      width: 0.098089084
       height: 0.2777778
     _rightCapWeights: []
     _rightCapColliderSize:
@@ -92,9 +92,9 @@ MonoBehaviour:
     - -0.67
     _bodies:
     - serializedVersion: 2
-      x: 0.16988365
+      x: 0.17057708
       y: 0
-      width: 0.68288636
+      width: 0.68080586
       height: 0.2777778
     _bodyWeights: []
     _yOffsetPercent: -0.06

@@ -7,6 +7,7 @@ public class TentacleAnimation : MonoBehaviour {
 
 	public int tentacleLength = 10;
 	public float tentacleScaleRatio = 0.95f;
+	public float tentacleInitialScaleRatio = 0.5f;
 	public float tentaclePositionRatio = 0.8f;
 
 	public GameObject tentaclePrefab;
@@ -44,7 +45,7 @@ public class TentacleAnimation : MonoBehaviour {
 			} else {
 				bone.transform.localRotation = Quaternion.identity;
 			}
-			bone.transform.localScale = Vector3.one;
+			bone.transform.localScale = Vector3.one * tentacleInitialScaleRatio;
 
 			if (parentBoneScript != null) {
 				// bone.transform.position = parentBoneScript.endPosition;
@@ -75,7 +76,13 @@ public class TentacleAnimation : MonoBehaviour {
 		ikCCDComponent2.numBones = baseBone.chainLength;
 		ikCCDComponent2.target = baseBone;
 
+		GetComponent<TentacleMouseControl>().baseIk = ikCCD2.GetComponent<Rigidbody2D>();
+		GetComponent<TentacleMouseControl>().tentacleIk = ikCCD.GetComponent<Rigidbody2D>();
 
+	}
+
+	public void Attack() {
+		
 	}
 
 	// Update is called once per frame
