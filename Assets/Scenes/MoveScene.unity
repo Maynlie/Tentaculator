@@ -688,7 +688,7 @@ Prefab:
     - target: {fileID: 114452077450926924, guid: 41f30741a0c38ea4dbe7664f17c87b8f,
         type: 2}
       propertyPath: rightHand
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41f30741a0c38ea4dbe7664f17c87b8f, type: 2}
