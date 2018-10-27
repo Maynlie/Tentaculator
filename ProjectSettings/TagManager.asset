@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ground
   - alien
+  - essence
   layers:
   - Default
   - TransparentFX

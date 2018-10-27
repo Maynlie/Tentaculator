@@ -9,6 +9,7 @@ public class AlienBehavior : MonoBehaviour {
     private bool grounded = false;
     private Rigidbody2D rb;
     private int vitesse = 5;
+    public GameObject essence;
 	// Use this for initialization
 	void Start () {
         player = GameObject.Find("Perso").GetComponent<BoxCollider2D>();
@@ -71,4 +72,13 @@ public class AlienBehavior : MonoBehaviour {
 
         rb.freezeRotation = true;
 	}
+
+    public void Die()
+    {
+        //Leave Essence
+        GameObject.Instantiate(essence, transform.position, Quaternion.identity);
+
+        //getDestroyed
+        Destroy(gameObject);
+    }
 }

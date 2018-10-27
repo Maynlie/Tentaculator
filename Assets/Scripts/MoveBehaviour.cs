@@ -10,8 +10,8 @@ public class MoveBehaviour : MonoBehaviour {
     private int direction;
     public float vitesse;
     public float jumpHeight;
-    public Transform groundPos;
     public GameObject shot;
+    public bool canJump = false;
 
 	// Use this for initialization
 	void Start () {
@@ -53,7 +53,7 @@ public class MoveBehaviour : MonoBehaviour {
             if (facingRight) Flip();
         }
 
-        if(Input.GetKeyDown("space") && grounded)
+        if(Input.GetKeyDown("space") && grounded && canJump)
         {
             rb.AddForce(new Vector2(0f, jumpHeight));
         }
@@ -76,5 +76,10 @@ public class MoveBehaviour : MonoBehaviour {
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+    }
+
+    public void getEssence(int type)
+    {
+        canJump = true;
     }
 }
