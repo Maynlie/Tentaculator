@@ -124,9 +124,9 @@ GameObject:
   - component: {fileID: 106571205}
   - component: {fileID: 106571204}
   - component: {fileID: 106571203}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sol
-  m_TagString: Untagged
+  m_TagString: ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -517,8 +517,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c49eb71dd25fe9848b867f655f314d53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 1114581335}
   vitesse: 5
+  jumpHeight: 500
+  groundPos: {fileID: 106571206}
 --- !u!1 &1304611605
 GameObject:
   m_ObjectHideFlags: 0

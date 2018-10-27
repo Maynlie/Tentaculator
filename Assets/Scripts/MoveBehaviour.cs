@@ -4,31 +4,46 @@ using UnityEngine;
 
 public class MoveBehaviour : MonoBehaviour {
 
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
+    private bool grounded = false;
     public float vitesse;
+    public float jumpHeight;
+    public Transform groundPos;
 
 	// Use this for initialization
 	void Start () {
-
+        rb = gameObject.GetComponent<Rigidbody2D>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		if(Input.GetKey("left"))
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        
+        for (int i = 0; i < coll.contacts.Length; i++)
         {
-            rb.AddForce(-transform.right * vitesse);
+            if (coll.contacts[i].normal.y > 0)
+            {
+                grounded = true;
+            }
         }
-        else if(Input.GetKey("right"))
+    }
+
+    void OnCollisionExit2D(Collision2D coll)
+    {
+        if(coll.collider.gameObject.tag == "ground")
         {
-            rb.AddForce(transform.right * vitesse);
+            grounded = false;
         }
-        else if(Input.GetKeyUp("left"))
+    }
+
+    // Update is called once per frame
+    void Update () {
+        float translateX = Input.GetAxis("Horizontal") * vitesse;
+
+        if(Input.GetKeyDown("space") && grounded)
         {
-            rb.AddForce(transform.right * vitesse);
+            rb.AddForce(new Vector2(0f, jumpHeight));
         }
-        else if (Input.GetKeyUp("right"))
-        {
-            rb.AddForce(-transform.right * vitesse);
-        }
+
+        rb.velocity = new Vector2(translateX, rb.velocity.y);
     }
 }
