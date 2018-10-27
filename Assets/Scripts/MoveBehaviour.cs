@@ -137,6 +137,16 @@ public class MoveBehaviour : MonoBehaviour {
 
         Collider2D coll = ray.collider;
 
+        Transform ikTarget = tentacleAnim.IKTipOfTentacle;        
+        this.AnimateOverTime01(actionDuration, j => {
+            Vector2 destination = (Vector2)transform.position + (mouse - (Vector2) this.transform.position).normalized * attackDistance;
+            ikTarget.position = Vector3.Lerp(
+                ikTarget.position, 
+                destination,
+                j
+            );
+        });
+
         if (coll != null)
         {
             if (coll.gameObject.layer == LayerMask.NameToLayer("Default"))
