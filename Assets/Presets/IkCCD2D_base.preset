@@ -1,0 +1,210 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: IkCCD2D_base
+  m_TargetType:
+    m_NativeTypeID: 114
+    m_ManagedTypePPtr: {fileID: 11500000, guid: 315ee65f910e84c6c8c8b891a9513484,
+      type: 3}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_Enabled
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorHideFlags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Name
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorClassIdentifier
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Target
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Record
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_TargetTransform
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_NumBones
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Weight
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_RestoreDefaultPose
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_OrientChild
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: iterations
+    value: 20
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: damping
+    value: 0.8
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_RootBone
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_RootBoneTransform
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.size
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[0].m_Bone
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[0].m_BoneTransform
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[0].solverPosition.x
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[0].solverPosition.y
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[0].solverPosition.z
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[0].solverRotation.x
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[0].solverRotation.y
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[0].solverRotation.z
+    value: -0.16540526
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[0].solverRotation.w
+    value: -0.9862257
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[0].defaultLocalRotation.x
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[0].defaultLocalRotation.y
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[0].defaultLocalRotation.z
+    value: 0.7071068
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[0].defaultLocalRotation.w
+    value: 0.7071068
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[1].m_Bone
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[1].m_BoneTransform
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[1].solverPosition.x
+    value: 0.7605002
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[1].solverPosition.y
+    value: -0.00000009313226
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[1].solverPosition.z
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[1].solverRotation.x
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[1].solverRotation.y
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[1].solverRotation.z
+    value: -0.0007258913
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[1].solverRotation.w
+    value: 0.99999976
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[1].defaultLocalRotation.x
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[1].defaultLocalRotation.y
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[1].defaultLocalRotation.z
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_SolverPoses.Array.data[1].defaultLocalRotation.w
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_Weight
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.m_RestoreDefaultPose
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.targetPosition.x
+    value: -2.57
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.targetPosition.y
+    value: -2.9099998
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.targetPosition.z
+    value: -1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.iterations
+    value: 20
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_Solver.damping
+    value: 0.8
+    objectReference: {fileID: 0}
