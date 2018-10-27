@@ -14,7 +14,7 @@ public class MoveBehaviour : MonoBehaviour {
     private bool canJump = true;
     private bool hasTentacle = true;
     private bool hasShield = true;
-    private bool shieldSpawned;
+    private bool shieldSpawned = false;
     
     public enum EquipHand
     {
@@ -194,12 +194,20 @@ public class MoveBehaviour : MonoBehaviour {
     public void handleShield()
     {
         if (!hasShield) return;
+        if (shieldSpawned) return;
         Vector2 mouse = Input.mousePosition;
         mouse = (Vector2)Camera.main.ScreenToWorldPoint(mouse);
 
         Vector2 v = (mouse - (Vector2)transform.position).normalized;
 
         GameObject shieldSpawn = (GameObject)GameObject.Instantiate(shield, transform.position + (Vector3)v * 2, Quaternion.Euler(0, 0, Vector2.Angle(Vector2.right, v)));
+        shieldSpawn.transform.parent = transform;
 
+        shieldSpawned = true;
+    }
+
+    public void clearShield()
+    {
+        shieldSpawned = false;
     }
 }
