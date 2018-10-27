@@ -14,6 +14,9 @@ public class TentacleAnimation : MonoBehaviour {
 	public GameObject ikCCDAllPrefab;
 	public GameObject ikCCDBasePrefab;
 
+	public Transform IKBase;
+	public Transform IKTipOfTentacle;
+
 	// Use this for initialization
 	void Start () {
 
@@ -34,6 +37,9 @@ public class TentacleAnimation : MonoBehaviour {
 				this.transform.rotation,
 				parentTentacle
 			);
+			if (iTentacleUnit <= 2) {
+				tentacleUnit.GetComponent<SpriteMeshInstance>().sortingOrder = 2;
+			}
 
 			// create bone
 			GameObject bone = new GameObject ("bone");
@@ -78,8 +84,9 @@ public class TentacleAnimation : MonoBehaviour {
 
 		TentacleMouseControl mouseControle = GetComponent<TentacleMouseControl> ();
 		if (mouseControle != null) {
-			GetComponent<TentacleMouseControl> ().baseIk = ikCCD2.transform;
-			GetComponent<TentacleMouseControl> ().tentacleIk = ikCCD.GetComponent<Rigidbody2D> ();
+			IKBase = ikCCD2.transform;
+			IKTipOfTentacle = ikCCD.transform;
+			GetComponent<TentacleMouseControl> ().center = baseBone.root.transform;
 		}
 	}
 

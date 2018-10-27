@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class TentacleMouseControl : MonoBehaviour {
 
-	public Transform baseIk;
-	public Rigidbody2D tentacleIk;
+	public Transform center;
 	public float targetDistance = 1;
 	public float mouseDepth = 13;
 	private Camera c;
@@ -16,14 +15,14 @@ public class TentacleMouseControl : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void LateUpdate () {
+	void Update () {
 		Vector3 mousePos = c.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 13));
 		Vector3 orientation = ((Vector2) mousePos - (Vector2) this.transform.position).normalized;
-		Vector3 targetDistanceVect =  this.transform.position + orientation * targetDistance;
-		baseIk.position = this.transform.position + orientation;
+		Vector3 targetDistanceVect = center.position + orientation * targetDistance;
+		GetComponent<TentacleAnimation>().IKBase.position = center.position + orientation * 3;
 		Vector2 left = Vector2Extension.Rotate (orientation * targetDistance, 90);
 		Vector2 right = Vector2Extension.Rotate (orientation * targetDistance, -90);
 		Vector2 pos = left.y > right.y ? left : right;
-		tentacleIk.GetComponent<TargetJoint2D> ().target = (Vector2)targetDistanceVect + pos;
+		GetComponent<TentacleAnimation>().IKTipOfTentacle.GetComponent<TargetJoint2D> ().target = (Vector2)targetDistanceVect + pos;
 	}
 }
