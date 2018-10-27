@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TentacleMouseControl : MonoBehaviour {
 
-	public Rigidbody2D baseIk;
+	public Transform baseIk;
 	public Rigidbody2D tentacleIk;
 	public float targetDistance = 1;
 	public float mouseDepth = 13;

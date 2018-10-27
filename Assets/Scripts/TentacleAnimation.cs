@@ -76,13 +76,13 @@ public class TentacleAnimation : MonoBehaviour {
 		ikCCDComponent2.numBones = baseBone.chainLength;
 		ikCCDComponent2.target = baseBone;
 
-		GetComponent<TentacleMouseControl>().baseIk = ikCCD2.GetComponent<Rigidbody2D>();
+		GetComponent<TentacleMouseControl>().baseIk = ikCCD2.transform;
 		GetComponent<TentacleMouseControl>().tentacleIk = ikCCD.GetComponent<Rigidbody2D>();
 
 	}
 
 	public void Attack() {
-		
+
 	}
 
 	// Update is called once per frame
