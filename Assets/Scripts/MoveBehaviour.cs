@@ -6,15 +6,30 @@ public class MoveBehaviour : MonoBehaviour {
 
     private Rigidbody2D rb;
     private bool facingRight = true;
-    private int direction;
+    private int direction = 1;
     public float vitesse;
     public float jumpHeight;
     public GameObject shot;
+    public GameObject shield;
     private bool canJump = true;
-    public bool hasTentacle = false;
+    private bool hasTentacle = true;
+    private bool hasShield = true;
+    private bool shieldSpawned;
+    
+    public enum EquipHand
+    {
+        NONE,
+        GUN,
+        DASH,
+        TENTACLE,
+        SHIELD
+    };
 
-	// Use this for initialization
-	void Start () {
+    public EquipHand leftHand;
+    public EquipHand rightHand;
+
+    // Use this for initialization
+    void Start () {
         rb = gameObject.GetComponent<Rigidbody2D>();
 	}
 
@@ -33,63 +48,53 @@ public class MoveBehaviour : MonoBehaviour {
             if (facingRight) Flip();
         }
 
-        /*if(Input.GetKeyDown("space") && canJump)
+        if(Input.GetMouseButtonDown(0) && leftHand != EquipHand.NONE)
         {
-            rb.AddForce(new Vector2(0f, jumpHeight));
-        }*/
-
-        if(Input.GetMouseButtonDown(0) && canJump)
-        {
-            Vector2 mouse = Input.mousePosition;
-            mouse = (Vector2)Camera.main.ScreenToWorldPoint(mouse);
-
-            Debug.DrawLine(transform.position, mouse, Color.red);
-
-            ContactFilter2D filter;
-            filter.layerMask = LayerMask.NameToLayer("Ground");
-            
-            RaycastHit2D[] rays = Physics2D.LinecastAll(transform.position, mouse);
-
-            for(int i = 0; i < rays.Length; i++)
+            switch(leftHand)
             {
-                Collider2D coll = rays[i].collider;
-                if(coll != null)
-                {
-                    if(coll.gameObject.layer == 8)
-                    {
-                        if(rays[i].distance < 3)
-                        {
-                            Vector2 v = (Vector2)transform.position - mouse;
-                            if (v.x > 0) v.x = 1;
-                            if (v.x < 0) v.x = -1;
-                            if (v.y > 0) v.y = 1;
-                            if (v.y < 0) v.y = -1;
-
-                            rb.AddForce(v * jumpHeight);
-                        }
-                    }
-                    if(coll.gameObject.tag == "alien")
-                    {
-                        if (rays[i].distance < 3)
-                        {
-                            //repousse l'alien
-                        }
-                    }
-                }
+                case EquipHand.GUN:
+                    handleGun();
+                    break;
+                case EquipHand.DASH:
+                    handleDash();
+                    break;
+                case EquipHand.TENTACLE:
+                    handleTentacle();
+                    break;
+                case EquipHand.SHIELD:
+                    handleShield();
+                    break;
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftControl))
+        if(Input.GetMouseButtonDown(1) && rightHand != EquipHand.NONE)
         {
-            GameObject gun = GameObject.Find("Gun");
-            GameObject shoot = (GameObject)GameObject.Instantiate(shot, gun.transform.position, Quaternion.identity);
-            shoot.GetComponent<Rigidbody2D>().AddForce(new Vector2(1000*direction, 0));
+            switch (rightHand)
+            {
+                case EquipHand.GUN:
+                    handleGun();
+                    break;
+                case EquipHand.DASH:
+                    handleDash();
+                    break;
+                case EquipHand.TENTACLE:
+                    handleTentacle();
+                    break;
+                case EquipHand.SHIELD:
+                    handleShield();
+                    break;
+            }
         }
 
-        if(translateX == 0)
+        if(translateX == 0f)
+        {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
+        }
         else
+        {
             rb.velocity = new Vector2(translateX, rb.velocity.y);
+        }
+            
 
         rb.freezeRotation = true;
     }
@@ -108,11 +113,93 @@ public class MoveBehaviour : MonoBehaviour {
             canJump = true;
         else if (type == 2)
             hasTentacle = true;
+        else if (type == 3)
+            hasShield = true;
 
     }
 
     public void die()
     {
         Debug.Log("I'm Dead. Let's Respawn and Mutate");
+    }
+
+    public void handleGun()
+    {
+        GameObject gun = GameObject.Find("Gun");
+        Vector2 mouse = Input.mousePosition;
+        mouse = (Vector2)Camera.main.ScreenToWorldPoint(mouse);
+        GameObject shoot = (GameObject)GameObject.Instantiate(shot, gun.transform.position, Quaternion.identity);
+        //Si jamais on veut tirer en direction de la souris plutot que tout droit
+        shoot.GetComponent<Rigidbody2D>().AddForce(((Vector2)transform.position - mouse).normalized * 1000);
+        //shoot.GetComponent<Rigidbody2D>().AddForce(new Vector2(1000 * direction, 0));
+    }
+
+    public void handleDash()
+    {
+        if (!canJump) return;
+        Vector2 mouse = Input.mousePosition;
+        mouse = (Vector2)Camera.main.ScreenToWorldPoint(mouse);
+        RaycastHit2D ray = Physics2D.Linecast(transform.position, mouse, 1 << LayerMask.NameToLayer("Default"));
+
+        Collider2D coll = ray.collider;
+
+        if (coll != null)
+        {
+            if (coll.gameObject.layer == LayerMask.NameToLayer("Default"))
+            {
+                if (ray.distance < 3)
+                {
+                    Vector2 v = ((Vector2)transform.position - mouse).normalized;
+                                        rb.AddForce(v * jumpHeight);
+                }
+            }
+            if (coll.gameObject.tag == "alien")
+            {
+                if (ray.distance < 3)
+                {
+                     //repousse l'alien et damage
+                }
+            }
+        }
+    }
+
+    public void handleTentacle()
+    {
+        if (!hasTentacle) return;
+        Vector2 mouse = Input.mousePosition;
+        mouse = (Vector2)Camera.main.ScreenToWorldPoint(mouse);
+        RaycastHit2D ray = Physics2D.Linecast(transform.position, mouse, 1<<LayerMask.NameToLayer("Default"));
+
+        Debug.DrawLine(transform.position, mouse);
+
+        
+
+        Collider2D coll = ray.collider;
+        Debug.Log(coll);
+        if (coll != null)
+        {
+            Debug.Log(coll.gameObject.tag);
+            if (coll.gameObject.tag == "alien")
+            {
+                if (ray.distance < 3)
+                {
+                    //more damage
+                    coll.gameObject.GetComponent<AlienBehavior>().Die();
+                } 
+            }
+        }
+        
+    }
+
+    public void handleShield()
+    {
+        if (!hasShield) return;
+        Vector2 mouse = Input.mousePosition;
+        mouse = (Vector2)Camera.main.ScreenToWorldPoint(mouse);
+
+        Vector2 v = (mouse - (Vector2)transform.position).normalized;
+
+        GameObject shieldSpawn = (GameObject)GameObject.Instantiate(shield, transform.position + (Vector3)v * 2, Quaternion.Euler(0, 0, Vector2.Angle(Vector2.right, v)));
+
     }
 }

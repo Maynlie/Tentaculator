@@ -77,6 +77,11 @@ public class AlienBehavior : MonoBehaviour {
             }
         }
 
+        if(mode == 3 && grounded)
+        {
+            rb.velocity = new Vector2(0, 0);
+        }
+
         rb.freezeRotation = true;
 	}
 

@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 106571205}
   - component: {fileID: 106571204}
   - component: {fileID: 106571203}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Sol
   m_TagString: ground
   m_Icon: {fileID: 0}
@@ -211,7 +211,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &195547438
+--- !u!1001 &677444898
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -250,10 +250,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 114874454882012762, guid: a20127865515d624fb30c82a1ef3987f,
-        type: 2}
-      propertyPath: mode
-      value: 2
+    - target: {fileID: 1527829347867526, guid: a20127865515d624fb30c82a1ef3987f, type: 2}
+      propertyPath: m_Name
+      value: Alien
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a20127865515d624fb30c82a1ef3987f, type: 2}
@@ -673,6 +672,24 @@ Prefab:
       propertyPath: groundPos
       value: 
       objectReference: {fileID: 106571206}
+    - target: {fileID: 114452077450926924, guid: 41f30741a0c38ea4dbe7664f17c87b8f,
+        type: 2}
+      propertyPath: leftHand
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760691613602464, guid: 41f30741a0c38ea4dbe7664f17c87b8f, type: 2}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1970893366742766, guid: 41f30741a0c38ea4dbe7664f17c87b8f, type: 2}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114452077450926924, guid: 41f30741a0c38ea4dbe7664f17c87b8f,
+        type: 2}
+      propertyPath: rightHand
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41f30741a0c38ea4dbe7664f17c87b8f, type: 2}
   m_IsPrefabAsset: 0

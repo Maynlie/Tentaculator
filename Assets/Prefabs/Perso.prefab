@@ -230,5 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vitesse: 5
   jumpHeight: 500
-  groundPos: {fileID: 0}
   shot: {fileID: 1759317503883560, guid: ac9efe49065c65c4f8788a19b69479b3, type: 2}
+  shield: {fileID: 1380597044871764, guid: f8512c9d1b332fc4ea2d7d815aac4b6f, type: 2}
+  leftHand: 0
+  rightHand: 0

@@ -17,10 +17,14 @@ public class MissileBehavior : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D collision)
     {
         Destroy(gameObject);
-
-        if(collision.gameObject.tag == "alien")
+        if (collision.collider.gameObject.tag == "shield")
         {
-            collision.gameObject.GetComponent<AlienBehavior>().Die();
+            Debug.Log("shield");
+        }
+
+        if(collision.collider.gameObject.tag == "alien")
+        {
+            collision.collider.gameObject.GetComponent<AlienBehavior>().Die();
         }
     }
 }
