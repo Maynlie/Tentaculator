@@ -1,19 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AnimationHelper;
 
 public class MoveBehaviour : MonoBehaviour {
 
+    // first is left 2nd is right
+    private TentacleAnimation[] tentacleAnims;
     private Rigidbody2D rb;
     private bool facingRight = true;
     private int direction = 1;
     public float vitesse;
     public float jumpHeight;
+    public float attackDistance;
     public GameObject shot;
     public GameObject shield;
-    private bool canJump = false;
-    private bool hasTentacle = false;
-    private bool hasShield = false;
+
+
+    public float anticipationDuration = 0.3f;
+    public float actionDuration = 0.1f;
+    private bool canJump = true;
+    private bool hasTentacle = true;
+    private bool hasShield = true;
+
     private bool shieldSpawned = false;
     private bool paused = false;
     
@@ -32,7 +41,11 @@ public class MoveBehaviour : MonoBehaviour {
     // Use this for initialization
     void Start () {
         rb = gameObject.GetComponent<Rigidbody2D>();
+
         paused = false;
+
+        tentacleAnims = gameObject.GetComponentsInChildren<TentacleAnimation>();
+
 	}
 
     // Update is called once per frame
@@ -41,6 +54,7 @@ public class MoveBehaviour : MonoBehaviour {
         if (!paused)
         {
             float translateX = Input.GetAxis("Horizontal") * vitesse;
+
 
             if (translateX > 0)
             {
@@ -53,43 +67,17 @@ public class MoveBehaviour : MonoBehaviour {
                 if (facingRight) Flip();
             }
 
-            if (Input.GetMouseButtonDown(0) && leftHand != EquipHand.NONE)
-            {
-                switch (leftHand)
-                {
-                    case EquipHand.GUN:
-                        handleGun();
-                        break;
-                    case EquipHand.DASH:
-                        handleDash();
-                        break;
-                    case EquipHand.TENTACLE:
-                        handleTentacle();
-                        break;
-                    case EquipHand.SHIELD:
-                        handleShield();
-                        break;
-                }
-            }
 
-            if (Input.GetMouseButtonDown(1) && rightHand != EquipHand.NONE)
-            {
-                switch (rightHand)
-                {
-                    case EquipHand.GUN:
-                        handleGun();
-                        break;
-                    case EquipHand.DASH:
-                        handleDash();
-                        break;
-                    case EquipHand.TENTACLE:
-                        handleTentacle();
-                        break;
-                    case EquipHand.SHIELD:
-                        handleShield();
-                        break;
-                }
-            }
+        if(Input.GetMouseButtonDown(0) && leftHand != EquipHand.NONE)
+        {
+            HandleClick(leftHand, tentacleAnims.Length > 0 ? tentacleAnims[0] : null);
+        }
+
+        if(Input.GetMouseButtonDown(1) && rightHand != EquipHand.NONE)
+        {
+            HandleClick(rightHand, tentacleAnims.Length > 0 ? tentacleAnims[1] : null);
+        }
+
 
             if (translateX == 0f)
             {
@@ -110,12 +98,27 @@ public class MoveBehaviour : MonoBehaviour {
         }
     }
 
+    private void HandleClick(EquipHand hand, TentacleAnimation tentacleAnim) {
+        switch (hand) {
+            case EquipHand.GUN:
+                handleGun(tentacleAnim);
+                break;
+            case EquipHand.DASH:
+                handleDash(tentacleAnim);
+                break;
+            case EquipHand.TENTACLE:
+                handleTentacle(tentacleAnim);
+                break;
+            case EquipHand.SHIELD:
+                handleShield(tentacleAnim);
+                break;
+        }
+    }
+
     void Flip()
     {
         facingRight = !facingRight;
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
+        GetComponent<SpriteRenderer>().flipX = facingRight;
     }
 
     public void getEssence(int type)
@@ -144,18 +147,20 @@ public class MoveBehaviour : MonoBehaviour {
         paused = false;
     }
 
-    public void handleGun()
+    public void handleGun(TentacleAnimation tentacleAnim)
     {
-        GameObject gun = GameObject.Find("Gun");
         Vector2 mouse = Input.mousePosition;
         mouse = (Vector2)Camera.main.ScreenToWorldPoint(mouse);
-        GameObject shoot = (GameObject)GameObject.Instantiate(shot, gun.transform.position, Quaternion.identity);
+        Vector3 orientation = (mouse - (Vector2) this.transform.position).normalized;
+        GameObject shoot = (GameObject)GameObject.Instantiate(shot, this.transform.position + orientation, Quaternion.identity);
         //Si jamais on veut tirer en direction de la souris plutot que tout droit
-        shoot.GetComponent<Rigidbody2D>().AddForce((mouse - (Vector2)transform.position).normalized * 1000);
+
+        shoot.GetComponent<Rigidbody2D>().AddForce(orientation * 1000);
+
         //shoot.GetComponent<Rigidbody2D>().AddForce(new Vector2(1000 * direction, 0));
     }
 
-    public void handleDash()
+    public void handleDash(TentacleAnimation tentacleAnim)
     {
         if (!canJump) return;
         Vector2 mouse = Input.mousePosition;
@@ -163,6 +168,16 @@ public class MoveBehaviour : MonoBehaviour {
         RaycastHit2D ray = Physics2D.Linecast(transform.position, mouse, 1 << LayerMask.NameToLayer("Default"));
 
         Collider2D coll = ray.collider;
+
+        Transform ikTarget = tentacleAnim.IKTipOfTentacle;        
+        this.AnimateOverTime01(actionDuration, j => {
+            Vector2 destination = (Vector2)transform.position + (mouse - (Vector2) this.transform.position).normalized * attackDistance;
+            ikTarget.position = Vector3.Lerp(
+                ikTarget.position, 
+                destination,
+                j
+            );
+        });
 
         if (coll != null)
         {
@@ -184,47 +199,83 @@ public class MoveBehaviour : MonoBehaviour {
         }
     }
 
-    public void handleTentacle()
+    public void handleTentacle(TentacleAnimation tentacleAnim)
     {
         if (!hasTentacle) return;
-        Vector2 mouse = Input.mousePosition;
-        mouse = (Vector2)Camera.main.ScreenToWorldPoint(mouse);
-        RaycastHit2D ray = Physics2D.Linecast(transform.position, mouse, 1<<LayerMask.NameToLayer("Default"));
 
-        Debug.DrawLine(transform.position, mouse);
+        Transform ikTarget = tentacleAnim.IKTipOfTentacle;
 
-        
-
-        Collider2D coll = ray.collider;
-        Debug.Log(coll);
-        if (coll != null)
-        {
-            Debug.Log(coll.gameObject.tag);
-            if (coll.gameObject.tag == "alien")
-            {
-                if (ray.distance < 3)
-                {
-                    //more damage
-                    coll.gameObject.GetComponent<AlienBehavior>().Die();
-                } 
+        this.AnimateOverTime01(anticipationDuration, i => {
+            ikTarget.position = Vector3.Lerp(
+                ikTarget.position, 
+                transform.position,
+                i
+            );
+            if(i == 1) {
+                this.AnimateOverTime01(actionDuration, j => {
+                    Vector2 mouse = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    Vector2 destination = (Vector2)transform.position + (mouse - (Vector2) this.transform.position).normalized * attackDistance;
+                    ikTarget.position = Vector3.Lerp(
+                        ikTarget.position, 
+                        destination,
+                        j
+                    );
+                    if (j == 1) {
+                        Debug.DrawLine(transform.position, destination);
+                        RaycastHit2D ray = Physics2D.Linecast(transform.position, destination, 1<<LayerMask.NameToLayer("Default"));
+                        Collider2D coll = ray.collider;
+                        if (coll != null)
+                        {
+                            Debug.Log(coll.gameObject.tag);
+                            if (coll.gameObject.tag == "alien")
+                            {
+                                coll.gameObject.GetComponent<AlienBehavior>().Die();
+                            }
+                        }
+                    }
+                });
             }
-        }
-        
+        });
     }
 
-    public void handleShield()
+    public void handleShield(TentacleAnimation tentacleAnim)
     {
         if (!hasShield) return;
         if (shieldSpawned) return;
         Vector2 mouse = Input.mousePosition;
         mouse = (Vector2)Camera.main.ScreenToWorldPoint(mouse);
 
-        Vector2 v = (mouse - (Vector2)transform.position).normalized;
 
-        GameObject shieldSpawn = (GameObject)GameObject.Instantiate(shield, transform.position + (Vector3)v * 2, Quaternion.Euler(0, 0, Vector2.Angle(Vector2.right, v)));
-        shieldSpawn.transform.parent = transform;
+        Transform ikTarget = tentacleAnim.IKTipOfTentacle;
+        Transform ikbaseTarget = tentacleAnim.IKBase;
 
-        shieldSpawned = true;
+        this.AnimateOverTime01(anticipationDuration, i => {
+            ikTarget.position = Vector3.Lerp(
+                ikTarget.position, 
+                transform.position + new Vector3(0, 0.2f, 0),
+                i
+            );
+            ikbaseTarget.position = Vector3.Lerp(
+                ikbaseTarget.position, 
+                transform.position,
+                i
+            );
+            if(i == 1) {
+                Vector2 v = (mouse - (Vector2)transform.position).normalized;
+                GameObject shieldSpawn = (GameObject)GameObject.Instantiate(shield, transform.position + (Vector3)v * 2, Quaternion.Euler(0, 0, v.y > 0 ? Vector2.Angle(Vector2.right, v) : Vector2.Angle(Vector2.left, v)));
+                shieldSpawn.transform.parent = this.transform;
+                shieldSpawn.transform.localScale = Vector3.one * 4;
+                shieldSpawned = true;
+                this.AnimateOverTime01(0.4f, j => {
+                    ikTarget.position = transform.position + new Vector3(0, 0.2f, 0);
+                    ikbaseTarget.position = Vector3.Lerp(
+                        ikbaseTarget.position, 
+                        shieldSpawn.transform.position,
+                        i * 2
+                    );
+                });
+            }
+        });
     }
 
     public void clearShield()

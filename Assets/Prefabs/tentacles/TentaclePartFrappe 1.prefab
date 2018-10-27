@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114942913594995716}
   - component: {fileID: 137081991837515586}
   m_Layer: 0
-  m_Name: TentacleFrappe 1
+  m_Name: TentaclePartFrappe 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
