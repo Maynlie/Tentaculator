@@ -66,15 +66,15 @@ public class TentacleAnimation : MonoBehaviour {
 		GameObject ikCCD = GameObject.Instantiate(ikCCDAllPrefab);
 		IkCCD2D ikCCDComponent = ikCCD.GetComponent<IkCCD2D> ();
 		ikCCD.transform.SetParent (this.transform);
-		ikCCDComponent.numBones = parentBoneScript.chainLength - 2;
 		ikCCDComponent.target = parentBoneScript;
+		ikCCDComponent.numBones = parentBoneScript.chainLength - 2;
 
 		GameObject ikCCD2 =  GameObject.Instantiate(ikCCDBasePrefab);
 		IkCCD2D ikCCDComponent2 = ikCCD2.GetComponent<IkCCD2D> ();
 		ikCCD2.transform.SetParent (this.transform);
 		Bone2D baseBone = this.gameObject.GetComponentInChildren<Bone2D>().child;
-		ikCCDComponent2.numBones = baseBone.chainLength;
 		ikCCDComponent2.target = baseBone;
+		ikCCDComponent2.numBones = baseBone.chainLength;
 
 		GetComponent<TentacleMouseControl>().baseIk = ikCCD2.transform;
 		GetComponent<TentacleMouseControl>().tentacleIk = ikCCD.GetComponent<Rigidbody2D>();
