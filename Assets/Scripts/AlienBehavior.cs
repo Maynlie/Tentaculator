@@ -44,11 +44,11 @@ public class AlienBehavior : MonoBehaviour {
             onLeft = true;
         }
 
-        if (onLeft) {
-            rb.velocity = new Vector2 (-1 * vitesse, rb.velocity.y);
-        } else {
-            rb.velocity = new Vector2 (1 * vitesse, rb.velocity.y);
-        }
+        // if (onLeft) {
+        //     rb.velocity = new Vector2 (-1 * vitesse, rb.velocity.y);
+        // } else {
+        //     rb.velocity = new Vector2 (1 * vitesse, rb.velocity.y);
+        // }
 
         if (grounded && mode == 1) rb.AddForce (new Vector2 (0, 250));
 
