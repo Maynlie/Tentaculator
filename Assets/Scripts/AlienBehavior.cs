@@ -45,7 +45,7 @@ public class AlienBehavior : MonoBehaviour {
             t.transform.parent = this.transform;
             t.GetComponent<TentacleMouseControl> ().enabled = false;
             tentacleAnim = t.GetComponent<TentacleAnimation> ();
-            //tentacleAnim.BuildTentacle();
+            tentacleAnim.BuildTentacle();
             t.transform.localPosition = Vector3.zero;
             t.transform.localScale = Vector3.one;
         }
@@ -89,8 +89,9 @@ public class AlienBehavior : MonoBehaviour {
             accumulator -= Time.deltaTime;
             if (accumulator <= 0) {
                 if (mode == 1 && grounded) {
-                    Vector2 orientation = tentacleAnim.IKBase.transform.position - this.transform.position;
+                    Vector2 orientation = (tentacleAnim.IKBase.transform.position - this.transform.position).normalized;
                     rb.AddForce (new Vector2 (orientation.x * 200, orientation.y * 200));
+                    Debug.Log("Going toward " + orientation);
                     this.AnimateOverTime01 (0.4f, j => {
                         Vector2 destination = (Vector2) transform.position - orientation;
                         tentacleAnim.IKTipOfTentacle.position = Vector3.Lerp (
