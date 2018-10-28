@@ -16,14 +16,14 @@ public class MissileBehavior : MonoBehaviour {
         this.transform.rotation = Quaternion.Euler (0, 0, Vector2.SignedAngle (Vector2.right, rb.velocity));
     }
 
-    void OnCollisionEnter2D (Collision2D collision) {
+    void OnTriggerEnter2D (Collider2D collider) {
         Destroy (gameObject);
-        if (collision.collider.gameObject.tag == "shield") {
+        if (collider.gameObject.tag == "shield") {
             Debug.Log ("shield");
         }
 
-        if (collision.collider.gameObject.tag == "alien") {
-            collision.collider.gameObject.GetComponent<AlienBehavior> ().Die ();
+        if (collider.gameObject.tag == "alien") {
+            collider.gameObject.GetComponent<LifebarController> ().AddHp(-1);
         }
     }
 }
