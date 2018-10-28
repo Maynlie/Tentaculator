@@ -9,25 +9,27 @@ public class LevelSPawner : MonoBehaviour {
     public Vector3 playerPos;
     public GameObject player;
     public Canvas canvas;
-    public Button btn;
+    public Button[] btns;
 
 	// Use this for initialization
 	void Start () {
         canvas.gameObject.SetActive(false);
-        btn.onClick.AddListener(TaskOnClick);
+        btns[6].onClick.AddListener(validMutation);
     }
-	
-	// Update is called once per frame
-	void Update () {
+    
+    // Update is called once per frame
+    void Update () {
 		
 	}
 
-    void TaskOnClick()
+    void validMutation()
     {
         player.GetComponent<MoveBehaviour>().resume();
         Reset();
         canvas.gameObject.SetActive(false);
     }
+
+
 
     public void Reset()
     {
@@ -44,5 +46,26 @@ public class LevelSPawner : MonoBehaviour {
     public void mutate()
     {
         canvas.gameObject.SetActive(true);
+        if (player.GetComponent<MoveBehaviour>().CanJump)
+        {
+            if (btns[0].GetComponent<ButtonHandler>().disabled)
+                btns[0].GetComponent<ButtonHandler>().enable();
+            if (btns[3].GetComponent<ButtonHandler>().disabled)
+                btns[3].GetComponent<ButtonHandler>().enable();
+        }
+        if (player.GetComponent<MoveBehaviour>().HasTentacle)
+        {
+            if (btns[1].GetComponent<ButtonHandler>().disabled)
+                btns[1].GetComponent<ButtonHandler>().enable();
+            if (btns[4].GetComponent<ButtonHandler>().disabled)
+                btns[4].GetComponent<ButtonHandler>().enable();
+        }
+        if (player.GetComponent<MoveBehaviour>().HasShield)
+        {
+            if (btns[2].GetComponent<ButtonHandler>().disabled)
+                btns[2].GetComponent<ButtonHandler>().enable();
+            if (btns[5].GetComponent<ButtonHandler>().disabled)
+                btns[5].GetComponent<ButtonHandler>().enable();
+        }
     }
 }

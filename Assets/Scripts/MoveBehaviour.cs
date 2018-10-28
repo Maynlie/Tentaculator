@@ -25,9 +25,43 @@ public class MoveBehaviour : MonoBehaviour {
 
     public float anticipationDuration = 0.3f;
     public float actionDuration = 0.1f;
-    private bool canJump = true;
-    private bool hasTentacle = true;
+    private bool canJump;
+    public bool CanJump
+    {
+        get
+        {
+            return canJump;
+        }
+        set
+        {
+            canJump = value;
+        }
+
+    }
+    private bool hasTentacle;
+    public bool HasTentacle
+    {
+        get
+        {
+            return hasTentacle;
+        }
+        set
+        {
+            hasTentacle = value;
+        }
+    }
     private bool hasShield = true;
+    public bool HasShield
+    {
+        get
+        {
+            return hasShield;
+        }
+        set
+        {
+            hasShield = value;
+        }
+    }
     private bool grounded = false;
 
     private bool shieldSpawned = false;
@@ -35,7 +69,6 @@ public class MoveBehaviour : MonoBehaviour {
     
     public enum EquipHand
     {
-        NONE,
         GUN,
         DASH,
         TENTACLE,
@@ -43,6 +76,7 @@ public class MoveBehaviour : MonoBehaviour {
     };
 
     public EquipHand leftHand;
+
     public EquipHand rightHand;
 
     // Use this for initialization
@@ -51,6 +85,9 @@ public class MoveBehaviour : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
         anim = GetComponent<SelfAnimated>();
         paused = false;
+        canJump = false;
+        hasShield = false;
+        hasTentacle = false;
 
         tentacleAnims = gameObject.GetComponentsInChildren<TentacleAnimation>();
 
@@ -75,14 +112,14 @@ public class MoveBehaviour : MonoBehaviour {
             }
 
 
-        if(Input.GetMouseButtonDown(0) && leftHand != EquipHand.NONE)
+        if(Input.GetMouseButtonDown(0))
         {
             HandleClick(leftHand, tentacleAnims.Length > 0 ? tentacleAnims[0] : null);
         }
 
-        if(Input.GetMouseButtonDown(1) && rightHand != EquipHand.NONE)
+        if(Input.GetMouseButtonDown(1))
         {
-            HandleClick(rightHand, tentacleAnims.Length > 0 ? tentacleAnims[1] : null);
+            HandleClick(rightHand, tentacleAnims.Length > 1 ? tentacleAnims[1] : null);
         }
 
 
@@ -177,8 +214,6 @@ public class MoveBehaviour : MonoBehaviour {
 
     public void die()
     {
-        Debug.Log("I'm Dead. Let's Respawn and Mutate");
-        
         GameObject.Find("LevelManager").GetComponent<LevelSPawner>().mutate();
 
         paused = true;
@@ -186,7 +221,6 @@ public class MoveBehaviour : MonoBehaviour {
 
     public void resume()
     {
-        Debug.Log("resume");
         paused = false;
     }
 
@@ -196,8 +230,7 @@ public class MoveBehaviour : MonoBehaviour {
         mouse = (Vector2)Camera.main.ScreenToWorldPoint(mouse);
         Vector3 orientation = (mouse - (Vector2) this.transform.position).normalized;
         GameObject shoot = (GameObject)GameObject.Instantiate(shot, this.transform.position + orientation, Quaternion.identity);
-        //Si jamais on veut tirer en direction de la souris plutot que tout droit
-
+        
         shoot.GetComponent<Rigidbody2D>().AddForce(orientation * 1000);
         tentacleAnim.PlayAnimSound(0.1f);
 
