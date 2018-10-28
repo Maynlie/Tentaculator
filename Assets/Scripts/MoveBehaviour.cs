@@ -7,6 +7,7 @@ public class MoveBehaviour : MonoBehaviour {
 
     // first is left 2nd is right
     private TentacleAnimation[] tentacleAnims;
+    private SelfAnimated anim;
     private Rigidbody2D rb;
     public bool facingRight = true;
     private int direction = 1;
@@ -16,12 +17,18 @@ public class MoveBehaviour : MonoBehaviour {
     public GameObject shot;
     public GameObject shield;
 
+    private AudioSource audioSource;
+	public AudioClip[] footstepSound;
+    private float footstepDelay = 0.3f;
+    private float footstepSoundacc = 0.5f;
+
 
     public float anticipationDuration = 0.3f;
     public float actionDuration = 0.1f;
     private bool canJump = true;
     private bool hasTentacle = true;
     private bool hasShield = true;
+    private bool grounded = false;
 
     private bool shieldSpawned = false;
     private bool paused = false;
@@ -41,7 +48,8 @@ public class MoveBehaviour : MonoBehaviour {
     // Use this for initialization
     void Start () {
         rb = gameObject.GetComponent<Rigidbody2D>();
-
+        audioSource = GetComponent<AudioSource>();
+        anim = GetComponent<SelfAnimated>();
         paused = false;
 
         tentacleAnims = gameObject.GetComponentsInChildren<TentacleAnimation>();
@@ -81,10 +89,27 @@ public class MoveBehaviour : MonoBehaviour {
             if (translateX == 0f)
             {
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
+                anim.Play("Iddle");
             }
             else
             {
+                footstepSoundacc += Time.deltaTime;
                 rb.velocity = new Vector2(translateX, rb.velocity.y);
+                if (anim.currentAnimation != "Run" && grounded) anim.Play("Run");
+                if (anim.currentAnimation != "DashFwd" && !grounded 
+                    && (rb.velocity.x > 0 && facingRight
+                    || (rb.velocity.x < 0 && !facingRight))) {
+                    anim.Play("DashFwd");
+                }
+                if (anim.currentAnimation != "DashBack" && !grounded 
+                    && (rb.velocity.x > 0 && !facingRight
+                    || (rb.velocity.x < 0 && facingRight))) {
+                    anim.Play("DashBack");
+                }
+            }
+            if(footstepSoundacc > footstepDelay && grounded) {
+                footstepSoundacc = 0;
+                playFootstep(0.3f);
             }
 
             if (Input.GetKeyDown(KeyCode.K))
@@ -96,6 +121,25 @@ public class MoveBehaviour : MonoBehaviour {
 
         }
     }
+
+    private void OnCollisionEnter2D (Collision2D collision) {
+        if (collision.collider.gameObject.tag == "ground") {
+            grounded = true;
+        }
+    }
+
+    private void OnCollisionExit2D (Collision2D collision) {
+        if (collision.collider.gameObject.tag == "ground") {
+            grounded = false;
+        }
+    }
+
+    private void playFootstep (float volume) {
+		if (footstepSound.Length < 0) return;
+		audioSource.clip = footstepSound[Random.Range (0, footstepSound.Length - 1)];
+		audioSource.volume = volume;
+		audioSource.Play();
+	}
 
     private void HandleClick(EquipHand hand, TentacleAnimation tentacleAnim) {
         switch (hand) {
@@ -155,6 +199,7 @@ public class MoveBehaviour : MonoBehaviour {
         //Si jamais on veut tirer en direction de la souris plutot que tout droit
 
         shoot.GetComponent<Rigidbody2D>().AddForce(orientation * 1000);
+        tentacleAnim.PlayAnimSound(0.1f);
 
         //shoot.GetComponent<Rigidbody2D>().AddForce(new Vector2(1000 * direction, 0));
     }
@@ -184,9 +229,12 @@ public class MoveBehaviour : MonoBehaviour {
             {
                 if (ray.distance < 3)
                 {
+                    tentacleAnim.PlayHitSound(0.2f);
                     Vector2 v = ((Vector2)transform.position - mouse).normalized;
                                         rb.AddForce(v * jumpHeight);
                 }
+            } else {
+                 tentacleAnim.PlayAnimSound(0.1f);
             }
             if (coll.gameObject.tag == "alien")
             {
@@ -195,6 +243,8 @@ public class MoveBehaviour : MonoBehaviour {
                      //repousse l'alien et damage
                 }
             }
+        } else {
+            tentacleAnim.PlayAnimSound(0.1f);
         }
     }
 
@@ -211,6 +261,7 @@ public class MoveBehaviour : MonoBehaviour {
                 i
             );
             if(i == 1) {
+                tentacleAnim.PlayAnimSound(0.2f);
                 this.AnimateOverTime01(actionDuration, j => {
                     Vector2 mouse = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     Vector2 destination = (Vector2)transform.position + (mouse - (Vector2) this.transform.position).normalized * attackDistance;
@@ -225,6 +276,7 @@ public class MoveBehaviour : MonoBehaviour {
                         Collider2D coll = ray.collider;
                         if (coll != null)
                         {
+                            tentacleAnim.PlayHitSound(0.4f);
                             Debug.Log(coll.gameObject.tag);
                             if (coll.gameObject.tag == "alien")
                             {
@@ -247,7 +299,8 @@ public class MoveBehaviour : MonoBehaviour {
 
         Transform ikTarget = tentacleAnim.IKTipOfTentacle;
         Transform ikbaseTarget = tentacleAnim.IKBase;
-
+        tentacleAnim.PlayAnimSound(0.5f);
+        
         this.AnimateOverTime01(anticipationDuration, i => {
             ikTarget.position = Vector3.Lerp(
                 ikTarget.position, 
@@ -265,6 +318,7 @@ public class MoveBehaviour : MonoBehaviour {
                 shieldSpawn.transform.parent = this.transform;
                 shieldSpawn.transform.localScale = Vector3.one * 4;
                 shieldSpawned = true;
+                tentacleAnim.PlayHitSound(0.5f);
                 this.AnimateOverTime01(0.4f, j => {
                     ikTarget.position = transform.position + new Vector3(0, 0.2f, 0);
                     ikbaseTarget.position = Vector3.Lerp(

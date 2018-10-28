@@ -82,7 +82,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1848845603836484}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0.07174462, y: 2.6868014, z: 1}
   m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children:
   - {fileID: 4891839100862588}
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.28774744
+  m_Length: 0.28774753
   m_Child: {fileID: 0}
   m_ChildTransform: {fileID: 4053917277868082}
   m_AttachedIK: {fileID: 0}
@@ -176,6 +176,9 @@ MonoBehaviour:
   ikCCDBasePrefab: {fileID: 0}
   IKBase: {fileID: 4891839100862588}
   IKTipOfTentacle: {fileID: 0}
+  animSound:
+  - {fileID: 8300000, guid: 3a5f30e3954b70246a48b7f464c4457b, type: 3}
+  hitSounds: []
 --- !u!114 &114815218781584904
 MonoBehaviour:
   m_ObjectHideFlags: 1

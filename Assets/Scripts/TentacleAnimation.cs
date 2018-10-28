@@ -17,9 +17,26 @@ public class TentacleAnimation : MonoBehaviour {
 	public Transform IKBase;
 	public Transform IKTipOfTentacle;
 
+	private AudioSource audioSource;
+	public AudioClip[] animSound;
+	public AudioClip[] hitSounds;
+
 	// Use this for initialization
 	void Start () {
+		audioSource = GetComponent<AudioSource> ();
+	}
 
+	public void PlayAnimSound (float volume) {
+		playSound (animSound, volume);
+	}
+	public void PlayHitSound (float volume) {
+		playSound (hitSounds, volume);
+	}
+	private void playSound (AudioClip[] sonds, float volume) {
+		if (sonds.Length <= 0) return;
+		audioSource.clip = sonds[Random.Range (0, sonds.Length - 1)];
+		audioSource.volume = volume;
+		audioSource.Play();
 	}
 
 	public void BuildTentacle () {
@@ -38,7 +55,7 @@ public class TentacleAnimation : MonoBehaviour {
 				parentTentacle
 			);
 			if (iTentacleUnit <= 2) {
-				tentacleUnit.GetComponent<SpriteMeshInstance>().sortingOrder = 2;
+				tentacleUnit.GetComponent<SpriteMeshInstance> ().sortingOrder = 2;
 			}
 
 			// create bone

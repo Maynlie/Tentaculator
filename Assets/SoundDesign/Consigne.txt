@@ -1,0 +1,43 @@
+
+---------------------------------------------- Consigne à mettre en application quand à l'implantation des musiques/sons ----------------------------------------------
+
+
+- Background: 
+
+	- 1.LvlBackgroundMusic: "1.IntroBackgroundMusic" à lancer dès que le gameplay commence et "2.BackgroundMusic" à partir de 2sec 85 (il doit boucler), le faire fondre lorsque le personnage meurt
+
+	- 2.BossMusicBackgroundMusic: (s'il y a Boss) "1.IntroBossMusicBackground" à lancer dès que le gameplay commence et "2.BossMusicBackground" à partir de 1sec 42 (il doit boucler), le faire fondre lorsque le personnage meurt
+
+	- BackgroundAmbience: A lancer dès le début du jeu (il tourne en permanence)
+
+
+- Dash: A lancer lors d'un dash, effectuer un random avec les 3 Dash différent
+
+
+- DeadHuman: A lancer lorsque le personnage meurt
+
+
+- Footsteps: A lancer lorsque le personnage marche, effectuer un random avec les 6 Footsteps différent
+
+
+- Gun: A lancer lorsqu'un tir de gun est effectué
+
+
+- Shield: A lancer lorsqu'un bouclier est touché par un ennemi, effectuer un random avec les 3 Shield différent
+
+
+- SpawnClone: A lancer avant que le joueur prenne le contrôle du personnage, il simule la préparation d'un clone
+
+
+- TentaclePunch:
+
+	- "TentaclePunchMiss" à lancer quand le mouvement du fouet est effectué
+
+	- "TentaclePunch1-2-3" à lancer lorsque le personnage touche un alien ou inversement, effectuer un random avec les 3 TentaclePunch différent
+
+
+- VoxAlien: 
+
+	- DeadAlien: A lancer lorsqu'un alien meurt
+
+	- VoxAlien: A lancer aléatoirement quand il y a au moins un alien dans la scène, effectuer un random avec les 6 VoxAlien différent
