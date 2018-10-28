@@ -8,7 +8,7 @@ public class MoveBehaviour : MonoBehaviour {
     // first is left 2nd is right
     private TentacleAnimation[] tentacleAnims;
     private Rigidbody2D rb;
-    private bool facingRight = true;
+    public bool facingRight = true;
     private int direction = 1;
     public float vitesse;
     public float jumpHeight;
