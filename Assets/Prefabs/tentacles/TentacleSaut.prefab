@@ -965,7 +965,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2d726fc6ca09b64e9f2f4913b943170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  center: {fileID: 4135582983795018}
+  center: {fileID: 0}
   targetDistance: 1
   mouseDepth: 13
 --- !u!114 &114551730715438034
@@ -1041,8 +1041,8 @@ MonoBehaviour:
     type: 2}
   ikCCDBasePrefab: {fileID: 1841603931739588, guid: 921e23aaaaf65ec47a055eb3ae333607,
     type: 2}
-  IKBase: {fileID: 4627120243753060}
-  IKTipOfTentacle: {fileID: 4585270942210666}
+  IKBase: {fileID: 0}
+  IKTipOfTentacle: {fileID: 0}
 --- !u!114 &114734234568171814
 MonoBehaviour:
   m_ObjectHideFlags: 1
