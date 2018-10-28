@@ -176,8 +176,7 @@ MonoBehaviour:
   ikCCDBasePrefab: {fileID: 0}
   IKBase: {fileID: 4891839100862588}
   IKTipOfTentacle: {fileID: 0}
-  animSound:
-  - {fileID: 8300000, guid: 3a5f30e3954b70246a48b7f464c4457b, type: 3}
+  animSound: []
   hitSounds: []
 --- !u!114 &114815218781584904
 MonoBehaviour:

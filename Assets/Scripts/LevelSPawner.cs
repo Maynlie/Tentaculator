@@ -24,7 +24,12 @@ public class LevelSPawner : MonoBehaviour {
 
     void validMutation()
     {
+        foreach(Transform child in player.transform)
+        {
+            GameObject.DestroyImmediate(child.gameObject);
+        }
         player.GetComponent<MoveBehaviour>().resume();
+        player.GetComponent<MoveBehaviour>().equipAll();
         Reset();
         canvas.gameObject.SetActive(false);
     }
@@ -41,6 +46,7 @@ public class LevelSPawner : MonoBehaviour {
         o.name = "Level";
 
         player.transform.position = playerPos;
+        
     }
 
     public void mutate()

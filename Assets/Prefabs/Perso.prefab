@@ -442,8 +442,7 @@ MonoBehaviour:
   ikCCDBasePrefab: {fileID: 0}
   IKBase: {fileID: 4674948587221818}
   IKTipOfTentacle: {fileID: 0}
-  animSound:
-  - {fileID: 8300000, guid: 3a5f30e3954b70246a48b7f464c4457b, type: 3}
+  animSound: []
   hitSounds: []
 --- !u!114 &114452077450926924
 MonoBehaviour:
@@ -461,17 +460,16 @@ MonoBehaviour:
   jumpHeight: 500
   attackDistance: 3
   shot: {fileID: 1759317503883560, guid: ac9efe49065c65c4f8788a19b69479b3, type: 2}
-  shield: {fileID: 1380597044871764, guid: f8512c9d1b332fc4ea2d7d815aac4b6f, type: 2}
-  footstepSound:
-  - {fileID: 8300000, guid: 102ee0e4833640c4ebb6a9f8d517beda, type: 3}
-  - {fileID: 8300000, guid: f4d4ea1c333f9074088b328d45366797, type: 3}
-  - {fileID: 8300000, guid: e4ec7319daf985d47a6c510298a828f0, type: 3}
-  - {fileID: 8300000, guid: d20f1148b88292549b759f1760fc0eb1, type: 3}
-  - {fileID: 8300000, guid: 2f0d12932c274114098e69df2332edda, type: 3}
-  - {fileID: 8300000, guid: cdf34b4fe3158bb44824746f840ce161, type: 3}
+  shieldSpawn: {fileID: 1380597044871764, guid: f8512c9d1b332fc4ea2d7d815aac4b6f,
+    type: 2}
+  gun: {fileID: 1848845603836484, guid: 92572bd167b140042acd48318a52310f, type: 2}
+  dasher: {fileID: 1957053883490512, guid: ae098227599c141498341298cfb0f441, type: 2}
+  attacker: {fileID: 1500422433970500, guid: 534bf29525c97e843be2823118c9b5cc, type: 2}
+  shield: {fileID: 1751970275971256, guid: e450e244edd59a841b3c7da131086d44, type: 2}
+  footstepSound: []
   anticipationDuration: 0.3
   actionDuration: 0.1
-  leftHand: 1
+  leftHand: 0
   rightHand: 0
 --- !u!114 &114558585571151284
 MonoBehaviour:
@@ -563,7 +561,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 43535543923792826, guid: b298bd558975cbe47bade6924ca032c5, type: 2}
+  m_Mesh: {fileID: 0}
   m_Bones:
   - {fileID: 4674948587221818}
   - {fileID: 4861661209498042}

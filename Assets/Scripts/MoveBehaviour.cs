@@ -15,6 +15,11 @@ public class MoveBehaviour : MonoBehaviour {
     public float jumpHeight;
     public float attackDistance;
     public GameObject shot;
+    public GameObject shieldSpawn;
+
+    public GameObject gun;
+    public GameObject dasher;
+    public GameObject attacker;
     public GameObject shield;
 
     private AudioSource audioSource;
@@ -91,7 +96,11 @@ public class MoveBehaviour : MonoBehaviour {
 
         tentacleAnims = gameObject.GetComponentsInChildren<TentacleAnimation>();
 
-	}
+        foreach (TentacleAnimation anim in tentacleAnims)
+        {
+            Debug.Log(anim.gameObject);
+        }
+    }
 
     // Update is called once per frame
     void Update () {
@@ -172,7 +181,7 @@ public class MoveBehaviour : MonoBehaviour {
     }
 
     private void playFootstep (float volume) {
-		if (footstepSound.Length < 0) return;
+		if (footstepSound.Length <= 0) return;
 		audioSource.clip = footstepSound[Random.Range (0, footstepSound.Length - 1)];
 		audioSource.volume = volume;
 		audioSource.Play();
@@ -193,6 +202,59 @@ public class MoveBehaviour : MonoBehaviour {
                 handleShield(tentacleAnim);
                 break;
         }
+    }
+
+    public void equipAll()
+    {
+        equip(leftHand);
+        Debug.Log(leftHand != EquipHand.GUN || rightHand != leftHand);
+        if(leftHand != EquipHand.GUN || rightHand != leftHand)
+            equip(rightHand);
+
+        
+
+        tentacleAnims = gameObject.GetComponentsInChildren<TentacleAnimation>();
+
+        foreach(TentacleAnimation anim in tentacleAnims)
+        {
+            Debug.Log(anim.gameObject);
+        }
+
+
+    }
+
+    public void equip(EquipHand hand)
+    {
+        GameObject toEquip;
+        switch(hand)
+        {
+            case EquipHand.GUN:
+                {
+                    toEquip = (GameObject)GameObject.Instantiate(gun, new Vector3(0, 0, 1), Quaternion.identity, transform);
+                    toEquip.transform.localPosition = new Vector3(0, 0, 0);
+                    break;
+                }
+            case EquipHand.DASH:
+                {
+                    toEquip = (GameObject)GameObject.Instantiate(dasher, new Vector3(0, 0, 1), Quaternion.identity, transform);
+                    toEquip.transform.localPosition = new Vector3(0, 0, 0);
+                    break;
+                }
+            case EquipHand.TENTACLE:
+                {
+                    toEquip = (GameObject)GameObject.Instantiate(attacker, new Vector3(0, 0, 1), Quaternion.identity, transform);
+                    toEquip.transform.localPosition = new Vector3(0, 0, 0);
+                    break;
+                }
+            case EquipHand.SHIELD:
+                {
+                    toEquip = (GameObject)GameObject.Instantiate(shield, new Vector3(0, 0, 1), Quaternion.identity, transform);
+                    toEquip.transform.localPosition = new Vector3(0, 0, 0);
+                    break;
+                }
+        }
+
+
     }
 
     void Flip()
@@ -347,16 +409,16 @@ public class MoveBehaviour : MonoBehaviour {
             );
             if(i == 1) {
                 Vector2 v = (mouse - (Vector2)transform.position).normalized;
-                GameObject shieldSpawn = (GameObject)GameObject.Instantiate(shield, transform.position + (Vector3)v * 2, Quaternion.Euler(0, 0, v.y > 0 ? Vector2.Angle(Vector2.right, v) : Vector2.Angle(Vector2.left, v)));
-                shieldSpawn.transform.parent = this.transform;
-                shieldSpawn.transform.localScale = Vector3.one * 4;
+                GameObject shieldSpawner = (GameObject)GameObject.Instantiate(shieldSpawn, transform.position + (Vector3)v * 2, Quaternion.Euler(0, 0, v.y > 0 ? Vector2.Angle(Vector2.right, v) : Vector2.Angle(Vector2.left, v)));
+                shieldSpawner.transform.parent = this.transform;
+                shieldSpawner.transform.localScale = Vector3.one * 4;
                 shieldSpawned = true;
                 tentacleAnim.PlayHitSound(0.5f);
                 this.AnimateOverTime01(0.4f, j => {
                     ikTarget.position = transform.position + new Vector3(0, 0.2f, 0);
                     ikbaseTarget.position = Vector3.Lerp(
-                        ikbaseTarget.position, 
-                        shieldSpawn.transform.position,
+                        ikbaseTarget.position,
+                        shieldSpawner.transform.position,
                         i * 2
                     );
                 });
