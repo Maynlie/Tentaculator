@@ -24,10 +24,7 @@ public class LevelSPawner : MonoBehaviour {
 
     void validMutation()
     {
-        foreach(Transform child in player.transform)
-        {
-            GameObject.DestroyImmediate(child.gameObject);
-        }
+        
         player.GetComponent<MoveBehaviour>().resume();
         player.GetComponent<MoveBehaviour>().equipAll();
         Reset();

@@ -291,6 +291,11 @@ public class MoveBehaviour : MonoBehaviour {
             GameObject.Find("LevelManager").GetComponent<LevelSPawner>().mutate();
         }, 1000);
 
+        foreach (Transform child in this.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
         paused = true;
     }
 
