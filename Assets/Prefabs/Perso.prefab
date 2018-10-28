@@ -72,11 +72,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4564989903477112}
   - component: {fileID: 50010466070227950}
-  - component: {fileID: 61212170208411984}
   - component: {fileID: 114452077450926924}
   - component: {fileID: 212946471673095690}
   - component: {fileID: 114109168760696712}
   - component: {fileID: 82623946666572464}
+  - component: {fileID: 70127893440098182}
   m_Layer: 8
   m_Name: Perso
   m_TagString: Player
@@ -159,8 +159,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &61212170208411984
-BoxCollider2D:
+--- !u!70 &70127893440098182
+CapsuleCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -171,19 +171,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.14868641, y: -0.46464157}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 13, y: 13.47}
-    newSize: {x: 13, y: 13.47}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 2.4125118, y: 10.404331}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0.025515556, y: -0.7655258}
+  m_Size: {x: 2.741972, y: 10.714111}
+  m_Direction: 0
 --- !u!82 &82623946666572464
 AudioSource:
   m_ObjectHideFlags: 1
@@ -442,7 +432,8 @@ MonoBehaviour:
   ikCCDBasePrefab: {fileID: 0}
   IKBase: {fileID: 4674948587221818}
   IKTipOfTentacle: {fileID: 0}
-  animSound: []
+  animSound:
+  - {fileID: 0}
   hitSounds: []
 --- !u!114 &114452077450926924
 MonoBehaviour:
@@ -458,6 +449,7 @@ MonoBehaviour:
   facingRight: 1
   vitesse: 5
   jumpHeight: 500
+  dashKnockBackForce: 30
   attackDistance: 3
   shot: {fileID: 1759317503883560, guid: ac9efe49065c65c4f8788a19b69479b3, type: 2}
   shieldSpawn: {fileID: 1380597044871764, guid: f8512c9d1b332fc4ea2d7d815aac4b6f,
@@ -469,6 +461,9 @@ MonoBehaviour:
   footstepSound: []
   anticipationDuration: 0.3
   actionDuration: 0.1
+  dashDamage: 2
+  attackDamage: 25
+  shieldDamage: 15
   leftHand: 0
   rightHand: 0
 --- !u!114 &114558585571151284

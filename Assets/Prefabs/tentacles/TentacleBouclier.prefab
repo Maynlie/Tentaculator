@@ -1091,7 +1091,10 @@ MonoBehaviour:
   IKBase: {fileID: 4861447418145944}
   IKTipOfTentacle: {fileID: 4802693418112466}
   animSound: []
-  hitSounds: []
+  hitSounds:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &114602131892148660
 MonoBehaviour:
   m_ObjectHideFlags: 1

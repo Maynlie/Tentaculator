@@ -38,6 +38,8 @@ GameObject:
   - component: {fileID: 4177605268559242}
   - component: {fileID: 212941500983834762}
   - component: {fileID: 114261039631781490}
+  - component: {fileID: 114253112646690538}
+  - component: {fileID: 58196415869046476}
   m_Layer: 0
   m_Name: Essence
   m_TagString: Untagged
@@ -52,7 +54,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1821762128404204}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.602844, y: 0.1345582, z: 0}
+  m_LocalPosition: {x: 1.0816154, y: -2.9847527, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children:
   - {fileID: 4865631881571776}
@@ -72,6 +74,33 @@ Transform:
   m_Father: {fileID: 4177605268559242}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &58196415869046476
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1821762128404204}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.11029571, y: 0.44118166}
+  serializedVersion: 2
+  m_Radius: 4.397111
+--- !u!114 &114253112646690538
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1821762128404204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20e5267a058aa49488cb775e291c765f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 0
 --- !u!114 &114261039631781490
 MonoBehaviour:
   m_ObjectHideFlags: 1

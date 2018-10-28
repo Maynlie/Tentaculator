@@ -13,6 +13,7 @@ public class MoveBehaviour : MonoBehaviour {
     private int direction = 1;
     public float vitesse;
     public float jumpHeight;
+    public float dashKnockBackForce;
     public float attackDistance;
     public GameObject shot;
     public GameObject shieldSpawn;
@@ -67,6 +68,11 @@ public class MoveBehaviour : MonoBehaviour {
             hasShield = value;
         }
     }
+
+    public float dashDamage = 2;
+    public float attackDamage = 25;
+    public float shieldDamage = 15;
+
     private bool grounded = false;
 
     private bool shieldSpawned = false;
@@ -276,7 +282,14 @@ public class MoveBehaviour : MonoBehaviour {
 
     public void die()
     {
-        GameObject.Find("LevelManager").GetComponent<LevelSPawner>().mutate();
+        if(leftHand == EquipHand.GUN && rightHand == EquipHand.GUN) {
+            anim.PlayOnce("DieArm");
+        } else {
+            anim.PlayOnce("Die");
+        }
+        this.setTimeout(() => {
+            GameObject.Find("LevelManager").GetComponent<LevelSPawner>().mutate();
+        }, 1000);
 
         paused = true;
     }
@@ -336,6 +349,9 @@ public class MoveBehaviour : MonoBehaviour {
                 if (ray.distance < 3)
                 {
                      //repousse l'alien et damage
+                     Vector2 v = (mouse - (Vector2)transform.position).normalized;
+                     coll.gameObject.GetComponent<Rigidbody2D>().AddForce(v * dashKnockBackForce);
+                     coll.gameObject.GetComponent<LifebarController>().AddHp(-dashDamage);
                 }
             }
         } else {
@@ -375,7 +391,9 @@ public class MoveBehaviour : MonoBehaviour {
                             Debug.Log(coll.gameObject.tag);
                             if (coll.gameObject.tag == "alien")
                             {
-                                coll.gameObject.GetComponent<AlienBehavior>().Die();
+                                Vector2 v = (mouse - (Vector2)transform.position).normalized;
+                                coll.gameObject.GetComponent<Rigidbody2D>().AddForce(v * dashKnockBackForce);
+                                coll.gameObject.GetComponent<LifebarController>().AddHp(-attackDamage);
                             }
                         }
                     }

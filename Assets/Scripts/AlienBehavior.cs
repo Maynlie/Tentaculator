@@ -5,15 +5,18 @@ using UnityEngine;
 
 public class AlienBehavior : MonoBehaviour {
     private SelfAnimated animation;
+    private LifebarController life;
     private bool onLeft = false;
     private bool grounded = false;
     private Rigidbody2D rb;
     private int vitesse = 5;
     public GameObject essence;
     public GameObject tentacle;
+
     public int mode;
     // Use this for initialization
     void Start () {
+        life = GetComponent<LifebarController> ();
         rb = gameObject.GetComponent<Rigidbody2D> ();
         animation = GetComponent<SelfAnimated> ();
         tentacle.SetActive (false);
@@ -58,13 +61,18 @@ public class AlienBehavior : MonoBehaviour {
         } else {
             if (animation.currentAnimation != "Run") animation.Play ("Run");
         }
+
+        if (life.GetHp() <= 0) {
+            life.SetHp(0);
+            Die ();
+        }
     }
 
     public void Die () {
         //Leave Essence
         GameObject ess = (GameObject) GameObject.Instantiate (essence, transform.position, Quaternion.identity);
         ess.GetComponent<EssenceBehavior> ().mode = mode;
-        ess.transform.parent = GameObject.Find("Level").transform;
+        ess.transform.parent = GameObject.Find ("Level").transform;
         //getDestroyed
         Destroy (gameObject);
     }
