@@ -76,11 +76,11 @@ public class AlienBehavior : MonoBehaviour {
             onLeft = true;
         }
 
-        if (onLeft) {
+        /*if (onLeft) {
             rb.velocity = new Vector2 (-1 * vitesse, rb.velocity.y);
         } else {
             rb.velocity = new Vector2 (1 * vitesse, rb.velocity.y);
-        }
+        }*/
 
         if (tentacleAnim != null && tentacleAnim.IKBase != null) {
             tentacleAnim.IKBase.transform.position = this.transform.position + new Vector3 (Mathf.Cos (Time.time * 1.5f + mode) * 2, Mathf.Sin (Time.time + mode) * 2, 1);

@@ -393,6 +393,18 @@ MonoBehaviour:
   - name: DashFwd
     sprites:
     - {fileID: 21300000, guid: c2b66290f88ea234bac8422f82a6b1c9, type: 3}
+  - name: DieArm
+    sprites:
+    - {fileID: 21300000, guid: 0315e4cf9de5abc47811b0d87824fe5d, type: 3}
+    - {fileID: 21300000, guid: 487eb870416dc4d43a91165f6f65dada, type: 3}
+    - {fileID: 21300000, guid: 424747574fc308845bdd866d347dfbd2, type: 3}
+    - {fileID: 21300000, guid: 1d71062f37c813945a7aa5c69350051f, type: 3}
+  - name: Die
+    sprites:
+    - {fileID: 21300000, guid: 7ec393fa76495894d8a27aa5c1446059, type: 3}
+    - {fileID: 21300000, guid: 76ec6efeedab422499183670b1ffd8fb, type: 3}
+    - {fileID: 21300000, guid: 8d66e4e26d903dd40898cc5af99227ca, type: 3}
+    - {fileID: 21300000, guid: 8822db3fc3bf2034dadd592d61de6d99, type: 3}
   animationDurationInSec: 0.5
   animate: 1
   loop: 1
