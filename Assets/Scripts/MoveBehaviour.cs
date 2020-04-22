@@ -102,9 +102,9 @@ public class MoveBehaviour : MonoBehaviour {
 
         tentacleAnims = gameObject.GetComponentsInChildren<TentacleAnimation>();
 
-        foreach (TentacleAnimation anim in tentacleAnims)
+        foreach (TentacleAnimation a in tentacleAnims)
         {
-            Debug.Log(anim.gameObject);
+            Debug.Log(a.gameObject);
         }
     }
 
